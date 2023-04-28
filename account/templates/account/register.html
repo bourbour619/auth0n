@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row vh-100 justify-content-center align-items-center">
+        <div class="col-6 row align-items-center">
+            <div class="col-12 row justify-content-center">
+                <p class="col-auto shadow fs-4 p-4 text-light bg-primary rounded ">
+                 سامانه ورود یکپارچه authOn
+                </p>
+            </div>
+            <form method="POST" class="col-12 shadow p-4 row row-cols-2 align-items-center" novalidate>
+                {% csrf_token %}
+                {{ form }}
+                <div class="col-12 row justify-content-end">
+                    <button type="submit" class="col-auto btn btn-success">
+                        ثبت نام <i class="bi bi-check-lg"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</div>
+{% endblock content %}
