@@ -1,14 +1,34 @@
 from django import forms
+from django.core import validators
+from django.core.exceptions import ValidationError
 
-class RegisterAccountForm(forms.Form):
+from core.models import User
+
+class RegisterAccountForm(forms.ModelForm):
     template_name = 'account/form_snippet.html'
     
-    first_name = forms.CharField(label='نام', max_length=30)
-    last_name = forms.CharField(label='نام خانوادگی', max_length=30)
-    email = forms.CharField(label='ایمیل', widget=forms.EmailInput)
-    mobile = forms.CharField(label='تلفن همراه')
-    password = forms.CharField(label='رمز عبور', widget=forms.PasswordInput)
-    confirm_password = forms.CharField(label='تایید رمز عبور', widget=forms.PasswordInput)
+    password = forms.CharField(label='گذرواژه', widget=forms.PasswordInput)
+    confirm_password = forms.CharField(label='تایید گذرواژه', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email', 'password', 'confirm_password']
+        
+    
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email', None)
+        password = cleaned_data.get('password', None)
+        confirm_password = cleaned_data.get('confirm_password', None)
+        
+        if password != confirm_password:
+            raise ValidationError('رمز های عبور یکسان نیست.')
+
+        return cleaned_data
+
+        
+
 
 
 

@@ -1,25 +1,26 @@
-from django.shortcuts import render
-from django.views.generic import View
+from core.models import User
+from django.views.generic import FormView
 from .forms import *
 
 # Create your views here.
 
-class RegisterView(View):
+class RegisterView(FormView):
+    form_class = RegisterAccountForm
+    template_name = 'account/register.html'
+    success_url = '/account/login/'
 
-    def get(self, request):
-        form = RegisterAccountForm()
-        return render(request, 'account/register.html', { 'form': form })
-    
-    def post(self, request):
-        pass
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.type = User.UserType('STAFF')
+        user.save()
+        return super().form_valid(form)
 
             
 
-class LoginView(View):
-
-    def get(self, request):
-        form = LoginAccountForm()
-        return render(request, 'account/login.html', { 'form': form })
+class LoginView(FormView):
+    form_class = LoginAccountForm
+    template_name = 'account/login.html'
+    success_url = '/account/profile/'
 
 
 

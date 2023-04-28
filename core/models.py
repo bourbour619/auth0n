@@ -11,22 +11,22 @@ class BaseModel(models.Model):
         abstract = True
 
 class User(AbstractUser, BaseModel):
-    class UserType(models.IntegerChoices):
-        STAFF = 1
-        SUBSCRIBER = 2
-        OTHER = 3
-
-    type = models.IntegerField(choices=UserType.choices)
+    class UserType(models.TextChoices):
+        STAFF = 'STAFF'
+        SUBSCRIBER = 'SUBSCRIBER'
+        OTHER = 'OTHER'
+    
+    type = models.TextField(choices=UserType.choices)
     userstore = models.ForeignKey(to='UserStore', on_delete=models.SET_NULL, null=True)
 
 class UserStore(models.Model):
-    class UserStoreType(models.IntegerChoices):
-        SYSTEM = 1
-        APP = 2
+    class UserStoreType(models.TextChoices):
+        SYSTEM = 'SYSTEM'
+        APP = 'APP'
     name = models.CharField(max_length=20)
-    type = models.IntegerField(choices=UserStoreType.choices)
+    type = models.TextField(choices=UserStoreType.choices)
     active = models.BooleanField(default=True)
     description = models.TextField(null=True, blank=True)
-    attrs = models.JSONField(default={})
+    attrs = models.JSONField(default=dict)
 
   

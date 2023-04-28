@@ -6,6 +6,18 @@
 
 body {
     direction: rtl;
-    font-family: 'B Yekan', monospace;
-    line-height: 1.8rem;
+    font-family: 'CircularStd', 'Yekan Bakh', monospace;
+    line-height: 1.2rem;
+    font-weight: 700;
+}
+
+
+@font-face {
+    font-family: 'Yekan Bakh';
+    src: url('../fonts/Yekan\ Bakh\ Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'CircularStd';
+    src: url('../fonts/CircularStd-Medium.ttf') format('truetype');
 }
