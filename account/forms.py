@@ -35,5 +35,5 @@ class RegisterAccountForm(forms.ModelForm):
 class LoginAccountForm(forms.Form):
     template_name = 'account/form_snippet.html'
     
-    email = forms.CharField(label='ایمیل', widget=forms.EmailInput)
+    username = forms.CharField(label='نام کاربری')
     password = forms.CharField(label='رمز عبور', widget=forms.PasswordInput)
