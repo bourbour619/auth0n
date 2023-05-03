@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from core.models import User
 from django.views.generic import FormView, TemplateView
 from django.contrib.auth import authenticate, login, logout
