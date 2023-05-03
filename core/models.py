@@ -15,8 +15,12 @@ class User(AbstractUser, BaseModel):
         STAFF = 'STAFF'
         SUBSCRIBER = 'SUBSCRIBER'
         OTHER = 'OTHER'
-    
-    type = models.TextField(choices=UserType.choices)
+    class GenderType(models.TextChoices):
+        MALE = 'مرد'
+        FEMALE = 'زن'
+
+    type = models.CharField(choices=UserType.choices)
+    gender = models.CharField(choices=GenderType.choices)
     userstore = models.ForeignKey(to='UserStore', on_delete=models.SET_NULL, null=True)
 
 class UserStore(models.Model):
@@ -24,7 +28,7 @@ class UserStore(models.Model):
         SYSTEM = 'SYSTEM'
         APP = 'APP'
     name = models.CharField(max_length=20)
-    type = models.TextField(choices=UserStoreType.choices)
+    type = models.CharField(choices=UserStoreType.choices)
     active = models.BooleanField(default=True)
     description = models.TextField(null=True, blank=True)
     attrs = models.JSONField(default=dict)

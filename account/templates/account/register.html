@@ -8,15 +8,18 @@
                  سامانه ورود یکپارچه AuthOn
                 </p>
             </div>
-            <form method="POST" class="col-12 shadow bg-light p-4 row row-cols-2 align-items-center" novalidate>
-                {% csrf_token %}
-                {{ form }}
-                <div class="col-12 row justify-content-end">
-                    <button type="submit" class="col-auto btn btn-success">
-                        ثبت نام <i class="bi bi-check-lg"></i>
-                    </button>
-                </div>
-            </form>
+            <div class="col-12 shadow bg-light p-4 ">
+                <form method="POST" class="row row-cols-2 align-items-center" novalidate>
+                    {% csrf_token %}
+                    {{ form }}
+                    <div class="col-12 row justify-content-end">
+                        <button type="submit" class="col-auto btn btn-success">
+                            ثبت نام <i class="bi bi-check-lg"></i>
+                        </button>
+                    </div>
+                </form>
+                <a href="{% url 'account:login' %}" class="text-primary">وارد شوید</a>
+            </div>
         </div>
     </div>
     
