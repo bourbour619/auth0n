@@ -9,7 +9,7 @@ from .forms import *
 
 # Create your views here.
 
-class RegisterView(FormView):
+class RegisterAccountView(FormView):
     form_class = RegisterAccountForm
     template_name = 'account/register.html'
     success_url = '/account/login/'
@@ -35,10 +35,10 @@ class RegisterView(FormView):
 
             
 
-class LoginView(FormView):
+class LoginAccountView(FormView):
     form_class = LoginAccountForm
     template_name = 'account/login.html'
-    success_url = '/account/profile/'
+    success_url = '/account/'
 
     def get_initial(self):
         form_initial = super().get_initial()
@@ -60,7 +60,7 @@ class LoginView(FormView):
         
 
 
-class ProfileView(LoginRequiredMixin, TemplateView):
+class ProfileAccountView(LoginRequiredMixin, TemplateView):
     template_name = 'account/profile.html'
 
     def get_context_data(self, **kwargs):
