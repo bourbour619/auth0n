@@ -6,29 +6,17 @@
             <div class="col-10 row align-items-center shadow bg-light rounded h-75 p-0">
                 <div class="col-3 d-flex gap-4 h-100 rounded">
                     <ul id="profileNav" class="nav flex-column justify-content-around align-items-center gap-5 h-100 w-100 p-4">
+                      {% for item in items %}
                         <li class="nav-item">
-                          <a class="nav-link text-bg-primary rounded active" href="#">اطلاعات حساب کاربری</a>
+                          <a class="nav-link {% if item.active %} text-bg-primary rounded active {% else %} link-dark {% endif %}" href="{% url item.slug %}">{{ item.name }}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link link-dark " href="#">گروه‌ها</a>
-                          </li>
-                        <li class="nav-item">
-                          <a class="nav-link link-dark" href="#">مجوز‌ها</a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link link-dark" href="#">نشست‌ها</a>
-                        </li>
-                        <li class="nav-item ">
-                          <a class="nav-link link-danger" href="{% url 'account:logout'%}">خروج</a>
-                        </li>
+                      {% endfor %}
                       </ul>
                     <div class="vr"></div>
                 </div>
                 <div class="col-4">
                     
                 </div>
-                {% comment %} <h5> خوش آمدید {{ user.first_name }} {{ user.last_name }} </h5> {% endcomment %}
-                {% comment %} <a href="{% url "account:logout" %}" class="text-primary">خروج</a> {% endcomment %}
             </div>
         </div>
     </div>

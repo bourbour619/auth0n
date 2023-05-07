@@ -4,7 +4,6 @@ from django.core.exceptions import ValidationError
 from core.models import User
 
 class RegisterAccountForm(forms.ModelForm):
-    template_name = 'account/form_snippet.html'
     
     gender = forms.ChoiceField(label='جنسیت', choices=User.GenderType.choices, widget=forms.RadioSelect)
     password = forms.CharField(label='گذرواژه', widget=forms.PasswordInput)
@@ -32,7 +31,6 @@ class RegisterAccountForm(forms.ModelForm):
 
 
 class LoginAccountForm(forms.Form):
-    template_name = 'account/form_snippet.html'
     
     username = forms.CharField(label='نام کاربری')
     password = forms.CharField(label='رمز عبور', widget=forms.PasswordInput)

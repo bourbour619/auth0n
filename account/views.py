@@ -62,12 +62,56 @@ class LoginAccountView(FormView):
 
 class ProfileAccountView(LoginRequiredMixin, TemplateView):
     template_name = 'account/profile.html'
+    
+
+    def __init__(self, **kwargs: Any):
+        super().__init__(**kwargs)
+        self.items = (
+            { 'name': 'اطلاعات حساب کاربری', 'slug': 'account:edit'},
+            { 'name': 'گروه‌ها', 'slug': 'account:groups' },
+            { 'name': 'مجوزها', 'slug': 'account:permissions' },
+            { 'name': 'نشست‌ها', 'slug': 'account:sessions' },
+            { 'name': 'خروج', 'slug': 'account:logout' },
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        user = self.request.user
-        context['user'] = user
+        if self.request.user:
+            context['user'] = self.request.user
+        context['items'] = self.items
         return context
+    
+    def get(self, request):
+        if request.path == '/':
+            return redirect(reverse('account:edit'))
+        return super().get(request)
+    
+class EditAccountView(ProfileAccountView):
+    
+    def __init__(self, **kwargs: Any):
+        super().__init__(**kwargs)
+        self.items[0]['active'] = True
+        
+
+class GroupsAccountView(ProfileAccountView):
+    
+    def __init__(self, **kwargs: Any):
+        super().__init__(**kwargs)
+        self.items[1]['active'] = True
+
+class PermissionsAccountView(ProfileAccountView):
+    
+    def __init__(self, **kwargs: Any):
+        super().__init__(**kwargs)
+        self.items[2]['active'] = True
+
+
+class SessionsAccountView(ProfileAccountView):
+    
+    def __init__(self, **kwargs: Any):
+        super().__init__(**kwargs)
+        self.items[3]['active'] = True
+
     
 def logout_view(request):
     logout(request)

@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.forms',
     'widget_tweaks',
-    'core.apps.CoreConfig',
-    'account.apps.AccountConfig'
+    'core',
+    'account'
 ]
 
 MIDDLEWARE = [
@@ -143,3 +143,12 @@ AUTHENTICATION_BACKENDS = (
 )
 
 LOGIN_URL = '/account/login'
+
+from django.forms.renderers import TemplatesSetting
+
+
+class CustomFormRenderer(TemplatesSetting):
+    form_template_name = "form_snippet.html"
+
+
+FORM_RENDERER = "auth0n.settings.CustomFormRenderer"
