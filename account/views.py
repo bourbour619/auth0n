@@ -1,11 +1,10 @@
-from typing import Any, Dict
-from core.models import User
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView, RedirectView, TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, resolve
 from .forms import *
+from core.models import User
 
 # Create your views here.
 
@@ -61,56 +60,40 @@ class LoginAccountView(FormView):
 
 
 class ProfileAccountView(LoginRequiredMixin, TemplateView):
-    template_name = 'account/profile.html'
     
-
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
-        self.items = (
-            { 'name': 'اطلاعات حساب کاربری', 'slug': 'account:edit'},
-            { 'name': 'گروه‌ها', 'slug': 'account:groups' },
-            { 'name': 'مجوزها', 'slug': 'account:permissions' },
-            { 'name': 'نشست‌ها', 'slug': 'account:sessions' },
-            { 'name': 'خروج', 'slug': 'account:logout' },
-        )
+    def setup(self, request, *args, **kwargs):
+        self.user = request.user
+        view = resolve(request.path)
+        self.url = view.url_name
+        return super().setup(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.user:
-            context['user'] = self.request.user
-        context['items'] = self.items
+        context['user'] = self.user
+        context['url'] = self.url
         return context
-    
-    def get(self, request):
-        if request.path == '/':
-            return redirect(reverse('account:edit'))
-        return super().get(request)
+
+class ProfileAccountRedirectView(RedirectView):
+    permanent = False
+    query_string = False
+    pattern_name = 'account-edit'
     
 class EditAccountView(ProfileAccountView):
-    
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
-        self.items[0]['active'] = True
+    template_name = 'account/profile.html'
+    pass
         
 
 class GroupsAccountView(ProfileAccountView):
+    pass
     
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
-        self.items[1]['active'] = True
 
 class PermissionsAccountView(ProfileAccountView):
-    
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
-        self.items[2]['active'] = True
+    pass
 
 
 class SessionsAccountView(ProfileAccountView):
     
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
-        self.items[3]['active'] = True
+    pass
 
     
 def logout_view(request):

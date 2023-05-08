@@ -5,19 +5,71 @@
         <div class="row justify-content-center align-items-center vh-100">
             <div class="col-10 row align-items-center shadow bg-light rounded h-75 p-0">
                 <div class="col-3 d-flex gap-4 h-100 rounded">
-                    <ul id="profileNav" class="nav flex-column justify-content-around align-items-center gap-5 h-100 w-100 p-4">
-                      {% for item in items %}
+                    <ul class="nav flex-column justify-content-around align-items-center gap-5 h-100 w-100 p-4">
                         <li class="nav-item">
-                          <a class="nav-link {% if item.active %} text-bg-primary rounded active {% else %} link-dark {% endif %}" href="{% url item.slug %}">{{ item.name }}</a>
+                          <a class="nav-link 
+                              {% if url == 'edit' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                            href="{% url "account:edit" %}">
+                            اطلاعات حساب کاربری
+                          </a>
                         </li>
-                      {% endfor %}
+                        <li class="nav-item">
+                          <a class="nav-link 
+                              {% if url == 'groups' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                            href="{% url "account:groups" %}">
+                            گروه‌ها
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link 
+                              {% if url == 'permissions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                            href="{% url "account:groups" %}">
+                            مجوزها
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link 
+                              {% if url == 'sessions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                            href="{% url "account:groups" %}">
+                            نشست‌ها
+                          </a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link link-danger" href="{% url "account:logout" %}">
+                            خروج
+                          </a>
+                        </li>
                       </ul>
                     <div class="vr"></div>
                 </div>
                 <div class="col-4">
-                    
+                    {% block profile_view %}{% endblock %}
                 </div>
             </div>
         </div>
     </div>
 {% endblock content %}
+
+{% block page_js %}
+    <script>
+      $("nav a").each(function(){
+        $(this).on("mouseenter", function(){
+            {% if url == 'logout' %}
+              $(this).addClass("text-bg-danger")
+              $(this).removeClass("link-danger")
+            {% else %}
+              $(this).addClass("text-bg-primary")
+              $(this).removeClass("link-dark")
+            {% endif %}
+            $(this).addClass("rounded")
+        })
+        $(this).on("mouseleave", function(){
+            if(!$(this).hasClass('active')){
+                $(this).removeClass("text-bg-primary")
+                $(this).removeClass("rounded")
+                $(this).addClass("link-dark")
+            }
+        })
+      })
+    </script>
+{% endblock %}
