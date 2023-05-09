@@ -34,11 +34,25 @@ class LoginAccountForm(forms.Form):
 
 
 class EditAccountForm(forms.ModelForm):
-
-
-    new_password = forms.CharField(label='گذرواژه جدید', widget=forms.PasswordInput)
-    confirm_new_password = forms.CharField(label='تایید گذرواژه جدید', widget=forms.PasswordInput)
+    
+    new_password = forms.CharField(label='گذرواژه جدید', widget=forms.PasswordInput, required=False)
+    confirm_new_password = forms.CharField(label='تایید گذرواژه جدید', widget=forms.PasswordInput, required=False)
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email', 'new_password', 'confirm_new_password')
+        widgets = {
+            'first_name': forms.TextInput(attrs={'readonly': True}),
+            'last_name': forms.TextInput(attrs={'readonly': True})
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get('new_password', None)
+        new_confirm_password = cleaned_data.get('new_confirm_password', None)
+        
+        if new_password and new_confirm_password and \
+                        new_password != new_confirm_password:
+            raise ValidationError('رمز های عبور جدید یکسان نیست.')
+
+        return cleaned_data

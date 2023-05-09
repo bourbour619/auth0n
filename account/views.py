@@ -1,4 +1,4 @@
-from django.views.generic import FormView, RedirectView, TemplateView
+from django.views.generic import FormView, RedirectView, View, TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
@@ -59,7 +59,7 @@ class LoginAccountView(FormView):
         
 
 
-class ProfileAccountView(LoginRequiredMixin, TemplateView):
+class ProfileAccountView(LoginRequiredMixin, View):
     
     def setup(self, request, *args, **kwargs):
         self.user = request.user
@@ -79,14 +79,33 @@ class ProfileAccountRedirectView(RedirectView):
         return reverse('account:edit')
     
 class EditAccountView(ProfileAccountView, FormView):
-    template_name = 'account/profile.html'
+    template_name = 'account/profile/edit.html'
     form_class = EditAccountForm
 
-    success_url = '/account/'
+    success_url = '/account/edit/'
+
+    def get_initial(self):
+        form_initial = super().get_initial()
+        form_initial['email'] = self.user.email
+        form_initial['first_name'] = self.user.first_name
+        form_initial['last_name'] = self.user.last_name
+        return form_initial
+    
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        user = User.objects.get(username=self.user.username)
+        
+        new_password = form.cleaned_data['new_password'].value()
+        user.set_password(new_password)
+        user.save()
+        return super().form_valid(form)
+        
+
     
         
 
-class GroupsAccountView(ProfileAccountView):
+class GroupsAccountView(ProfileAccountView, TemplateView):
+    template_name = 'account/profile/groups.html'
     pass
     
 

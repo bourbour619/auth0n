@@ -42,7 +42,7 @@
                       </ul>
                     <div class="vr"></div>
                 </div>
-                <div class="col-4">
+                <div class="col-9 h-100">
                     {% block profile_view %}{% endblock %}
                 </div>
             </div>
@@ -55,7 +55,6 @@
       $(".nav a").each(function(){
         $(this).on("mouseenter", function(){
               v = $.trim($(this).text())
-              console.log(v)
               if(v == 'خروج'){                
                 $(this).addClass("text-bg-danger")
                 $(this).removeClass("link-danger")
@@ -66,10 +65,16 @@
             $(this).addClass("rounded")
         })
         $(this).on("mouseleave", function(){
+            v = $.trim($(this).text())
             if(!$(this).hasClass('active')){
+              if(v == 'خروج'){
+                $(this).removeClass("text-bg-danger")
+                $(this).addClass("link-danger")
+              } else {
                 $(this).removeClass("text-bg-primary")
-                $(this).removeClass("rounded")
                 $(this).addClass("link-dark")
+              }
+                $(this).removeClass("rounded")
             }
         })
       })
