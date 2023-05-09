@@ -52,15 +52,17 @@
 
 {% block page_js %}
     <script>
-      $("nav a").each(function(){
+      $(".nav a").each(function(){
         $(this).on("mouseenter", function(){
-            {% if url == 'logout' %}
-              $(this).addClass("text-bg-danger")
-              $(this).removeClass("link-danger")
-            {% else %}
-              $(this).addClass("text-bg-primary")
-              $(this).removeClass("link-dark")
-            {% endif %}
+              v = $.trim($(this).text())
+              console.log(v)
+              if(v == 'خروج'){                
+                $(this).addClass("text-bg-danger")
+                $(this).removeClass("link-danger")
+              } else {
+                $(this).addClass("text-bg-primary")
+                $(this).removeClass("link-dark")
+              }
             $(this).addClass("rounded")
         })
         $(this).on("mouseleave", function(){

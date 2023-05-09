@@ -11,7 +11,7 @@ class RegisterAccountForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'gender', 'email', 'password', 'confirm_password',]
+        fields = ('first_name', 'last_name', 'username', 'gender', 'email', 'password', 'confirm_password',)
         
     
     
@@ -27,10 +27,18 @@ class RegisterAccountForm(forms.ModelForm):
 
         
 
-
-
-
 class LoginAccountForm(forms.Form):
     
     username = forms.CharField(label='نام کاربری')
     password = forms.CharField(label='رمز عبور', widget=forms.PasswordInput)
+
+
+class EditAccountForm(forms.ModelForm):
+
+
+    new_password = forms.CharField(label='گذرواژه جدید', widget=forms.PasswordInput)
+    confirm_new_password = forms.CharField(label='تایید گذرواژه جدید', widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'new_password', 'confirm_new_password')

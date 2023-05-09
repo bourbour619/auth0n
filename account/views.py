@@ -74,13 +74,16 @@ class ProfileAccountView(LoginRequiredMixin, TemplateView):
         return context
 
 class ProfileAccountRedirectView(RedirectView):
-    permanent = False
-    query_string = False
-    pattern_name = 'account-edit'
+
+    def get_redirect_url(self):
+        return reverse('account:edit')
     
-class EditAccountView(ProfileAccountView):
+class EditAccountView(ProfileAccountView, FormView):
     template_name = 'account/profile.html'
-    pass
+    form_class = EditAccountForm
+
+    success_url = '/account/'
+    
         
 
 class GroupsAccountView(ProfileAccountView):
