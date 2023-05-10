@@ -1,10 +1,13 @@
 from django.views.generic import FormView, RedirectView, View, TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.http.response import HttpResponseRedirect
 from django.urls import reverse, resolve
-from .forms import *
+from django.contrib import messages
+
 from core.models import User
+from .forms import *
+
 
 # Create your views here.
 
@@ -18,7 +21,7 @@ class RegisterAccountView(FormView):
     def form_valid(self, form):
         user = form.save(commit=False)
         user.type = User.UserType('STAFF')
-        password = form['password'].value()
+        password = form.cleaned_data['password']
         user.set_password(password)
         user.save()
         self.username = user.username
@@ -93,11 +96,17 @@ class EditAccountView(ProfileAccountView, FormView):
     
     def form_valid(self, form):
         email = form.cleaned_data['email']
-        user = User.objects.get(username=self.user.username)
-        
-        new_password = form.cleaned_data['new_password'].value()
-        user.set_password(new_password)
+        new_password = form.cleaned_data['new_password']
+        try:
+            user = User.objects.get(username=self.user.username)
+        except User.DoesNotExist:
+            return HttpResponseRedirect(reverse('account:logout'))
+        if email:
+            user.email = email
+        if new_password:
+            user.set_password(new_password)
         user.save()
+        messages.success(self.request, 'حساب کاربری به روزرسانی شد.')
         return super().form_valid(form)
         
 
@@ -120,6 +129,6 @@ class SessionsAccountView(ProfileAccountView):
     
 def logout_view(request):
     logout(request)
-    return redirect(reverse('index'))
+    return HttpResponseRedirect(reverse('index'))
 
 
