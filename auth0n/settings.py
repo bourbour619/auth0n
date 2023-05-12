@@ -152,3 +152,13 @@ class CustomFormRenderer(TemplatesSetting):
 
 
 FORM_RENDERER = "auth0n.settings.CustomFormRenderer"
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: "debug",
+    messages.INFO: "info",
+    messages.SUCCESS: "success",
+    messages.WARNING: "warning",
+    messages.ERROR: "danger",
+}

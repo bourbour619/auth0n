@@ -107,6 +107,7 @@ class EditAccountView(ProfileAccountView, FormView):
             user.set_password(new_password)
         user.save()
         messages.success(self.request, 'حساب کاربری به روزرسانی شد.')
+        messages.error(self.request, 'حساب کاربری به روزرسانی شد.')
         return super().form_valid(form)
         
 
