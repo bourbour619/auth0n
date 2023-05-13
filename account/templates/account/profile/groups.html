@@ -1,5 +1,13 @@
 {% extends 'account/profile.html' %}
 
 {% block profile_view %}
-    
+    {% if groups %}
+    <div class="row justify-content-center w-100">
+        <ul class="col align-items-center d-flex flex-column">
+            {% for group in groups  %}
+                <li> {{ group.name }} </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 {% endblock %}

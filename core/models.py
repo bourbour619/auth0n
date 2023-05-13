@@ -33,4 +33,8 @@ class UserStore(models.Model):
     description = models.TextField(null=True, blank=True)
     attrs = models.JSONField(default=dict)
 
+
+    def __str__(self):
+        return 'مخزن کاربرها'
+
   

@@ -1,5 +1,6 @@
-from django.views.generic import FormView, RedirectView, View, TemplateView
+from django.views.generic import FormView, RedirectView, View, ListView
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import Group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse, resolve
@@ -107,16 +108,21 @@ class EditAccountView(ProfileAccountView, FormView):
             user.set_password(new_password)
         user.save()
         messages.success(self.request, 'حساب کاربری به روزرسانی شد.')
-        messages.error(self.request, 'حساب کاربری به روزرسانی شد.')
         return super().form_valid(form)
         
 
     
         
 
-class GroupsAccountView(ProfileAccountView, TemplateView):
+class GroupsAccountView(ProfileAccountView, ListView):
     template_name = 'account/profile/groups.html'
-    pass
+    model = Group
+    context_object_name = 'groups'
+
+    def get_queryset(self):
+        queryset = Group.objects.filter(user=self.user)
+        return queryset
+    
     
 
 class PermissionsAccountView(ProfileAccountView):
