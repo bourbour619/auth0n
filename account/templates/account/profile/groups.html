@@ -2,12 +2,12 @@
 
 {% block profile_view %}
     {% if groups %}
-    <div class="row justify-content-center w-100">
-        <ul class="col align-items-center d-flex flex-column">
+    <div class="col-9 row align-self-start p-4">
+        <div class="col-auto d-flex">
             {% for group in groups  %}
-                <li> {{ group.name }} </li>
+                <span class="rounded-pill text-bg-dark px-3 py-2"> {{ group.name }} </span>
             {% endfor %}
-        </ul>
+        </div>
     </div>
     {% endif %}
 {% endblock %}

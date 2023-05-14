@@ -1,0 +1,13 @@
+{% extends 'account/profile.html' %}
+
+{% block profile_view %}
+    {% if sessions %}
+    <div class="col-9 row align-self-start p-4">
+        <div class="col-auto d-flex flex-wrap gap-2">
+            {% for session in sessions  %}
+                <span class="rounded-pill text-bg-dark px-3 py-2"> {{ session.session_key }} </span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

@@ -3,7 +3,7 @@
 {% block content %}
     <div class="container">
         <div class="row justify-content-center align-items-center vh-100">
-            <div class="col-10 row align-items-center shadow bg-light rounded h-75 p-0">
+            <div class="col-10 row shadow bg-light rounded h-75 p-0">
                 <div class="col-3 d-flex gap-4 h-100 rounded">
                     <ul class="nav flex-column justify-content-around align-items-center gap-5 h-100 w-100 p-4">
                         <li class="nav-item">
@@ -23,14 +23,14 @@
                         <li class="nav-item">
                           <a class="nav-link 
                               {% if url == 'permissions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
-                            href="{% url "account:groups" %}">
+                            href="{% url "account:permissions" %}">
                             مجوزها
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link 
                               {% if url == 'sessions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
-                            href="{% url "account:groups" %}">
+                            href="{% url "account:sessions" %}">
                             نشست‌ها
                           </a>
                         </li>
@@ -42,9 +42,7 @@
                       </ul>
                     <div class="vr"></div>
                 </div>
-                <div class="col-9">
-                    {% block profile_view %}{% endblock %}
-                </div>
+                {% block profile_view %}{% endblock %}
             </div>
         </div>
     </div>

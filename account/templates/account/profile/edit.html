@@ -1,13 +1,15 @@
 {% extends 'account/profile.html' %}
 
 {% block profile_view %}
-    <form method="POST" class='row row-cols-1 align-items-center p-4 h-100 mx-auto w-75' novalidate>
-        {% csrf_token %}
-        {{ form }}
-        <div class="col-12 row justify-content-end">
-            <button type="submit" class="col-auto btn btn-success">
-                ثبت <i class="bi bi-check-lg"></i>
-            </button>
-        </div>
-    </form>
+    <div class="col-9 align-self-center">
+        <form method="POST" class='row row-cols-1 align-items-center p-4 h-100 mx-auto w-75' novalidate>
+            {% csrf_token %}
+            {{ form }}
+            <div class="col-12 row justify-content-end">
+                <button type="submit" class="col-auto btn btn-success">
+                    ثبت <i class="bi bi-check-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
 {% endblock %}

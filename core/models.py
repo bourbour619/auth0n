@@ -35,6 +35,6 @@ class UserStore(models.Model):
 
 
     def __str__(self):
-        return 'مخزن کاربرها'
+        return self.name
 
   

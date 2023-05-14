@@ -1,0 +1,13 @@
+{% extends 'account/profile.html' %}
+
+{% block profile_view %}
+    {% if permissions %}
+    <div class="col-9 row align-self-start p-4">
+        <div class="col-auto d-flex flex-wrap gap-2">
+            {% for permission in permissions  %}
+                <span class="rounded-pill text-bg-dark px-3 py-2"> {{ permission.name }} </span>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

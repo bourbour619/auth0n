@@ -1,10 +1,11 @@
 from django.views.generic import FormView, RedirectView, View, ListView
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse, resolve
 from django.contrib import messages
+from django.contrib.sessions.models import Session
 
 from core.models import User
 from .forms import *
@@ -59,6 +60,7 @@ class LoginAccountView(FormView):
         else:
             form.add_error(None, 'نام کاربری یا رمز عبور اشتباه است')
             return super().form_invalid(form)
+        messages.info(self.request, 'کاربر گرامی خوش آمدید')
         return super().form_valid(form)
         
 
@@ -125,13 +127,24 @@ class GroupsAccountView(ProfileAccountView, ListView):
     
     
 
-class PermissionsAccountView(ProfileAccountView):
-    pass
+class PermissionsAccountView(ProfileAccountView, ListView):
+    template_name = 'account/profile/permissions.html'
+    model = Permission
+    context_object_name = 'permissions'
+
+    def get_queryset(self):
+        queryset = Permission.objects.filter(user=self.user)
+        return queryset
 
 
-class SessionsAccountView(ProfileAccountView):
-    
-    pass
+class SessionsAccountView(ProfileAccountView, ListView):
+    template_name = 'account/profile/sessions.html'
+    model = Session
+    context_object_name = 'sessions'
+
+    def get_queryset(self):
+        queryset = Session.objects.all()
+        return queryset
 
     
 def logout_view(request):
