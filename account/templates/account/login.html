@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
+
 {% block content %}
 <div class="container">
     <div class="row vh-100 justify-content-center align-items-center">
         <div class="col-6 row justify-content-center">
             <div class="col-12 row justify-content-center">
                 <p class="col-auto shadow fs-4 p-4 text-light bg-primary rounded ">
-                 سامانه ورود یکپارچه AuthOn
+                    {% translate "Auth0n SSO" %}
                 </p>
             </div>
             <div class="col-8 shadow bg-light p-4">
@@ -15,11 +18,11 @@
                     {{ form }}
                     <div class="col-12 row justify-content-end">
                         <button type="submit" class="col-auto btn btn-success">
-                            ورود <i class="bi bi-check-lg"></i>
+                            {% translate "Sign In" %} <i class="bi bi-check-lg"></i>
                         </button>
                     </div>
                 </form>
-                <a href="{% url 'account:register' %}" class="text-primary">ثبت نام کنید</a>
+                <a href="{% url 'account:register' %}" class="text-primary">{% translate "Create Account" %}</a>
             </div>
         </div>
     </div>

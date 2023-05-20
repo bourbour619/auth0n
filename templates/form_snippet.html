@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load widget_tweaks %}
 
 {% for hidden in form.hidden_fields %}
@@ -12,7 +13,7 @@
           {% for choice in field %}
             <div class="col-auto form-check">
               <input class="form-check-input" name="{{choice.data.name}}" type="{{choice.data.type}}" value="{{choice.data.value}}" {% if choice.data.selected %} checked {% endif %}>
-              <label class="form-check-label mb-2" for="{{ choice.id_for_label }}">{{ choice.data.value }}</label>
+              <label class="form-check-label mb-2" for="{{ choice.id_for_label }}">{{ choice.data.label }}</label>
             </div>
           {% endfor %}
         </div>

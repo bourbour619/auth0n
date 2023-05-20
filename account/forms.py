@@ -1,13 +1,13 @@
 from django import forms
 from django.core.exceptions import ValidationError
-
-from core.models import User
+from django.utils.translation import gettext_lazy as _
+from .models import User
 
 class RegisterAccountForm(forms.ModelForm):
     
-    gender = forms.ChoiceField(label='جنسیت', choices=User.GenderType.choices, widget=forms.RadioSelect)
-    password = forms.CharField(label='گذرواژه', widget=forms.PasswordInput)
-    confirm_password = forms.CharField(label='تایید گذرواژه', widget=forms.PasswordInput)
+    gender = forms.ChoiceField(label=_('Gender'), choices=User.GenderType.choices, widget=forms.RadioSelect)
+    password = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
+    confirm_password = forms.CharField(label=_('Confirm Password'), widget=forms.PasswordInput)
 
     class Meta:
         model = User
@@ -21,7 +21,7 @@ class RegisterAccountForm(forms.ModelForm):
         confirm_password = cleaned_data.get('confirm_password', None)
         
         if password != confirm_password:
-            raise ValidationError('رمز های عبور یکسان نیست.')
+            raise ValidationError(_('Passwords doesn\'t match.' ))
 
         return cleaned_data
 
@@ -29,14 +29,14 @@ class RegisterAccountForm(forms.ModelForm):
 
 class LoginAccountForm(forms.Form):
     
-    username = forms.CharField(label='نام کاربری')
-    password = forms.CharField(label='رمز عبور', widget=forms.PasswordInput)
+    username = forms.CharField(label=_('Username'))
+    password = forms.CharField(label=_('Password'), widget=forms.PasswordInput)
 
 
 class EditAccountForm(forms.ModelForm):
     
-    new_password = forms.CharField(label='گذرواژه جدید', widget=forms.PasswordInput, required=False)
-    confirm_new_password = forms.CharField(label='تایید گذرواژه جدید', widget=forms.PasswordInput, required=False)
+    new_password = forms.CharField(label=_('New Password'), widget=forms.PasswordInput, required=False)
+    confirm_new_password = forms.CharField(label=_('Confirm New Password'), widget=forms.PasswordInput, required=False)
 
     class Meta:
         model = User
@@ -53,6 +53,6 @@ class EditAccountForm(forms.ModelForm):
         
         if new_password and new_confirm_password and \
                         new_password != new_confirm_password:
-            raise ValidationError('رمز های عبور جدید یکسان نیست.')
+            raise ValidationError(_('Passwords doesn\'t match.' ))
 
         return cleaned_data

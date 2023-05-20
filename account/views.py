@@ -6,8 +6,9 @@ from django.http.response import HttpResponseRedirect
 from django.urls import reverse, resolve
 from django.contrib import messages
 from django.contrib.sessions.models import Session
+from django.utils.translation import gettext as _
 
-from core.models import User
+from .models import User
 from .forms import *
 
 
@@ -58,9 +59,9 @@ class LoginAccountView(FormView):
         if user is not None:
             login(self.request, user)
         else:
-            form.add_error(None, 'نام کاربری یا رمز عبور اشتباه است')
+            form.add_error(None, _('Username or Password is wrong.'))
             return super().form_invalid(form)
-        messages.info(self.request, 'کاربر گرامی خوش آمدید')
+        messages.info(self.request, _('Welcome dear user.'))
         return super().form_valid(form)
         
 
@@ -109,7 +110,7 @@ class EditAccountView(ProfileAccountView, FormView):
         if new_password:
             user.set_password(new_password)
         user.save()
-        messages.success(self.request, 'حساب کاربری به روزرسانی شد.')
+        messages.success(self.request, _('Account information updated.'))
         return super().form_valid(form)
         
 

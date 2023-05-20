@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.utils.translation import gettext_lazy as _
 # Create your models here.
 
 class BaseModel(models.Model):
@@ -10,29 +10,17 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
-class User(AbstractUser, BaseModel):
-    class UserType(models.TextChoices):
-        STAFF = 'STAFF'
-        SUBSCRIBER = 'SUBSCRIBER'
-        OTHER = 'OTHER'
-    class GenderType(models.TextChoices):
-        MALE = 'مرد'
-        FEMALE = 'زن'
-
-    type = models.CharField(choices=UserType.choices)
-    gender = models.CharField(choices=GenderType.choices)
-    userstore = models.ForeignKey(to='UserStore', on_delete=models.SET_NULL, null=True)
 
 class UserStore(models.Model):
     class UserStoreType(models.TextChoices):
         SYSTEM = 'SYSTEM'
         APP = 'APP'
-    name = models.CharField(max_length=20)
-    type = models.CharField(choices=UserStoreType.choices)
-    active = models.BooleanField(default=True)
-    description = models.TextField(null=True, blank=True)
-    attrs = models.JSONField(default=dict)
-
+    name = models.CharField(max_length=20, verbose_name=_('Name'))
+    type = models.CharField(choices=UserStoreType.choices, verbose_name=_('Type'))
+    active = models.BooleanField(default=True, verbose_name=_('Active'))
+    description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
+    attrs = models.JSONField(default=dict, null=True, blank=True, verbose_name=_('Attributes'))
+        
 
     def __str__(self):
         return self.name
