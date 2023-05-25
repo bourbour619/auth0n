@@ -10,8 +10,8 @@ class LanguageMiddelware:
             del request.META['HTTP_ACCEPT_LANGUAGE']
         except KeyError:
             pass
-        # translation.activate(settings.LANGUAGE_CODE)
+
+        # translation.activate(settings.LANGUAGE_CODE.split('-')[0])
         response = self.get_response(request)
-
-
+        
         return response

@@ -23,7 +23,7 @@ class RegisterAccountView(FormView):
 
     def form_valid(self, form):
         user = form.save(commit=False)
-        user.type = User.UserType('STAFF')
+        user.type = User.UserType.STAFF
         password = form.cleaned_data['password']
         user.set_password(password)
         user.save()

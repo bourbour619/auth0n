@@ -23,7 +23,18 @@
         {% endautoescape %}
     </head>
     <body dir="{% if LANGUAGE_CODE == "fa" %}rtl{% else %}ltr{% endif %}">
+
         {% block content %}{% endblock content %}
+
+        {% get_available_languages as languages %}
+        <div class="position-fixed top-50 end-0 translate-middle-y list-group">
+                {% for lang_code, lang_name in languages %}
+                    <a href="{% url "set-language" lang_code %}" class="list-group-item list-group-item-action">
+                        {{ lang_name }}
+                    </a>
+                {% endfor %}
+        </div>
+
         {% if messages %}
             <div id="messages" class="position-absolute top-0 start-50 translate-middle-x mt-3" style="z-index: 9999;">
                 {% for message in messages %}

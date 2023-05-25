@@ -18,10 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from account.views import ProfileAccountRedirectView
+from core.views import set_language
 
+urlpatterns = [
+    path('lang/<str:code>/', set_language, name='set-language'),
+]
 
-urlpatterns = i18n_patterns(
+urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('', ProfileAccountRedirectView.as_view(), name='index'),
     path('account/', include('account.urls', namespace='account')),
+    prefix_default_language=False
 )
