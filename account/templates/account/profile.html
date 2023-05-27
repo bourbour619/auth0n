@@ -1,42 +1,44 @@
 {% extends "base.html" %}
 
+{% load i18n %}
+
 {% block content %}
     <div class="container">
         <div class="row justify-content-center align-items-center vh-100">
             <div class="col-10 row shadow bg-light rounded h-75 p-0">
                 <div class="col-3 d-flex gap-4 h-100 rounded">
-                    <ul class="nav flex-column justify-content-around align-items-center gap-5 h-100 w-100 p-4">
+                    <ul class="nav flex-column justify-content-around align-items-center gap-5 h-100 w-100 p-4 text-center">
                         <li class="nav-item">
                           <a class="nav-link 
                               {% if url == 'edit' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
                             href="{% url "account:edit" %}">
-                            اطلاعات حساب کاربری
+                            {% translate "Account Information" %}
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link 
                               {% if url == 'groups' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
                             href="{% url "account:groups" %}">
-                            گروه‌ها
+                            {% translate "Groups" %}
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link 
                               {% if url == 'permissions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
                             href="{% url "account:permissions" %}">
-                            مجوزها
+                            {% translate "Permissions" %}
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link 
                               {% if url == 'sessions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
                             href="{% url "account:sessions" %}">
-                            نشست‌ها
+                            {% translate "Sessions" %}
                           </a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link link-danger" href="{% url "account:logout" %}">
-                            خروج
+                              {% translate "Log out" %}
                           </a>
                         </li>
                       </ul>

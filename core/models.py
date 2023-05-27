@@ -20,7 +20,10 @@ class UserStore(models.Model):
     active = models.BooleanField(default=True, verbose_name=_('Active'))
     description = models.TextField(null=True, blank=True, verbose_name=_('Description'))
     attrs = models.JSONField(default=dict, null=True, blank=True, verbose_name=_('Attributes'))
-        
+
+    class Meta:
+        verbose_name = _('User Store')
+        verbose_name_plural = _('User Store\'s')
 
     def __str__(self):
         return self.name

@@ -18,4 +18,4 @@ class User(AbstractUser, BaseModel):
 
     type = models.CharField(choices=UserType.choices, verbose_name=_('Type'))
     gender = models.CharField(choices=GenderType.choices, verbose_name=_('Gender'))
-    userstore = models.ForeignKey(to='core.UserStore', on_delete=models.SET_NULL, null=True, verbose_name=_('Userstore'))
+    userstore = models.ForeignKey(to='core.UserStore', on_delete=models.SET_NULL, null=True, verbose_name=_('User Store'))
