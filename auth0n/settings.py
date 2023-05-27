@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.forms',
     'widget_tweaks',
     'core',
-    'account'
+    'account',
+    'dashboard'
 ]
 
 MIDDLEWARE = [

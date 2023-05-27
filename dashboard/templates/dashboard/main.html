@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="container m-0 p-0">
+        <div class="row align-items-center vh-100">
+            <div class="col-12 row rounded h-100">
+                <div class="col-auto d-flex gap-4 shadow h-100 bg-light rounded">
+                    <ul class="nav flex-column justify-content-around align-items-center gap-5 h-100 w-100 p-4">
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'edit' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "account:edit" %}">
+                                {% translate "Users" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'groups' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "account:groups" %}">
+                                {% translate "User Stores" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'sessions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "account:sessions" %}">
+                                {% translate "Claims" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'permissions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "account:permissions" %}">
+                                {% translate "Identity Providers" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'sessions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "account:sessions" %}">
+                                {% translate "Service Providers" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'sessions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "account:sessions" %}">
+                                {% translate "Sessions" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'sessions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "account:sessions" %}">
+                                {% translate "Logs" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-danger" href="{% url "account:logout" %}">
+                                {% translate "Log out" %}
+                            </a>
+                        </li>
+                    </ul>
+                    {% comment %} <div class="vr"></div> {% endcomment %}
+                </div>
+                {% block profile_view %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

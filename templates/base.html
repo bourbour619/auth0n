@@ -27,15 +27,24 @@
 
         {% block content %}{% endblock content %}
 
-        {% get_available_languages as languages %}
-        <div class="position-fixed top-50 end-0 translate-middle-y list-group">
-                {% for lang_code, lang_name in languages %}
-                    <a href="{% get_i18n_path lang_code %}" class="list-group-item list-group-item-action {% if lang_code == LANGUAGE_CODE %}active{% endif %}">
-                        {{ lang_name }}
-                    </a>
-                {% endfor %}
-        </div>
-
+        {% get_available_languages as LANGUAGES  %}
+        <form action="{% url 'set_language' %}" method="POST">{% csrf_token %}
+            <div class="position-fixed top-0 end-0 list-group gap-2 shadow bg-light p-4">
+                    <input name="next" type="hidden" value="{{ redirect_to }}">
+                    <select id="setLanguage" name="language" class="form-select">
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language  in languages %}
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                {{ language.name_translated }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                <button type="submit" class="btn btn-success">
+                    {% translate "Change" %}
+                    <i class="bi bi-check-lg"></i>
+                </button>
+            </div>
+        </form>
         {% if messages %}
             <div id="messages" class="position-absolute top-0 start-50 translate-middle-x mt-3" style="z-index: 9999;">
                 {% for message in messages %}

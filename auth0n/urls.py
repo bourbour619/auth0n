@@ -24,5 +24,10 @@ urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
     path('', ProfileAccountRedirectView.as_view(), name='index'),
     path('account/', include('account.urls', namespace='account')),
+    path('dashboard/', include('dashboard.urls', namespace='dashbaord')),
     prefix_default_language=False
 )
+
+urlpatterns += [
+    path("i18n/", include("django.conf.urls.i18n")),
+]

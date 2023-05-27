@@ -55,7 +55,7 @@
       $(".nav a").each(function(){
         $(this).on("mouseenter", function(){
               v = $.trim($(this).text())
-              if(v == 'خروج'){                
+              if(v == "{% translate "Log out" %}"){                
                 $(this).addClass("text-bg-danger")
                 $(this).removeClass("link-danger")
               } else {
@@ -67,7 +67,7 @@
         $(this).on("mouseleave", function(){
             v = $.trim($(this).text())
             if(!$(this).hasClass('active')){
-              if(v == 'خروج'){
+              if(v == "{% translate "Log out" %}"){
                 $(this).removeClass("text-bg-danger")
                 $(this).addClass("link-danger")
               } else {
