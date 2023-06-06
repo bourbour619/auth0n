@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<div class="modal fade" id="applicationDeleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>{% translate "Are you sure to delete the application" %}</p>
+                <form action="{% url "dashboard:application_delete" application_id %}" method="POST" novalidate>
+                    {% csrf_token %}
+                    <input class="btn btn-danger float-end" type="submit" name="allow" value="{% translate "Yes" %}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

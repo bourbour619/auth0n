@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'core',
     'account',
-    'dashboard'
+    'oauth2_provider',
+    'dashboard',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -151,6 +153,7 @@ AUTH_USER_MODEL = 'account.User'
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
+    'oauth2_provider.backends.OAuth2Backend',
 )
 
 LOGIN_URL = '/account/login'

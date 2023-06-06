@@ -22,6 +22,7 @@ from account.views import ProfileAccountRedirectView
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('', ProfileAccountRedirectView.as_view(), name='index'),
     path('account/', include('account.urls', namespace='account')),
     path('dashboard/', include('dashboard.urls', namespace='dashbaord')),

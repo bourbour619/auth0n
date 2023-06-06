@@ -23,13 +23,13 @@
             {% endblock %}
         {% endautoescape %}
     </head>
-    <body dir="{% if LANGUAGE_CODE == "fa" %}rtl{% else %}ltr{% endif %}">
+    <body class="{% if LANGUAGE_CODE == "fa" %}fa{% else %}other{% endif %}">
 
         {% block content %}{% endblock content %}
 
         {% get_available_languages as LANGUAGES  %}
         <form action="{% url 'set_language' %}" method="POST">{% csrf_token %}
-            <div class="position-fixed top-0 end-0 list-group gap-2 shadow bg-light p-4">
+            <div class="position-fixed top-50 end-0 translate-middle-y list-group gap-2 shadow bg-light p-4">
                     <input name="next" type="hidden" value="{{ redirect_to }}">
                     <select id="setLanguage" name="language" class="form-select">
                         {% get_language_info_list for LANGUAGES as languages %}

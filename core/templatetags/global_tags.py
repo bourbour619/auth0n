@@ -15,3 +15,9 @@ def get_i18n_path(context, lang_code):
     if lang_code != settings.LANGUAGE_CODE:
         path = f'/{lang_code}{path}'
     return path
+
+
+@register.inclusion_tag("dummy.html", takes_context=True)
+def render_template(context, template_dir, *args, **kwargs):
+    c = { 'template_dir': template_dir }
+    return c | kwargs if kwargs else c

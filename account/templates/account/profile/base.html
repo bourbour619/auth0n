@@ -37,6 +37,12 @@
                           </a>
                         </li>
                         <li class="nav-item">
+                          <a class="nav-link text-bg-warning rounded"
+                            href="{% url "dashboard:overview" %}">
+                            {% translate "Admin Dashboard" %}
+                          </a>
+                        </li>
+                        <li class="nav-item">
                           <a class="nav-link link-danger" href="{% url "account:logout" %}">
                               {% translate "Log out" %}
                           </a>
@@ -54,8 +60,9 @@
     <script>
       $(".nav a").each(function(){
         $(this).on("mouseenter", function(){
-              v = $.trim($(this).text())
-              if(v == "{% translate "Log out" %}"){                
+          v = $.trim($(this).text())
+          if(v == "{% translate "Admin Dashboard" %}") return
+          if(v == "{% translate "Log out" %}"){                
                 $(this).addClass("text-bg-danger")
                 $(this).removeClass("link-danger")
               } else {
@@ -66,6 +73,7 @@
         })
         $(this).on("mouseleave", function(){
             v = $.trim($(this).text())
+            if(v == "{% translate "Admin Dashboard" %}") return
             if(!$(this).hasClass('active')){
               if(v == "{% translate "Log out" %}"){
                 $(this).removeClass("text-bg-danger")

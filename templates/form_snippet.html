@@ -7,18 +7,23 @@
 
 {% for field in form.visible_fields %}
     <div class="col form-group mb-3">
+      <label class="mb-2" for="{{ field.id_for_label }}">{% translate field.label %}</label>
       {% if field.widget_type == 'radioselect' %}
-        <label class="mb-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
         <div class="row align-items-center mx-auto">
           {% for choice in field %}
             <div class="col-auto form-check">
               <input class="form-check-input" name="{{choice.data.name}}" type="{{choice.data.type}}" value="{{choice.data.value}}" {% if choice.data.selected %} checked {% endif %}>
-              <label class="form-check-label mb-2" for="{{ choice.id_for_label }}">{{ choice.data.label }}</label>
+              <label class="form-check-label mb-2" for="{{ choice.id_for_label }}">{% translate choice.data.label %}</label>
             </div>
           {% endfor %}
         </div>
+      {% elif field.widget_type == 'select' %}
+        <select class="form-select" name="{{field.name}}">
+          {% for choice in field %}
+            <option value="{{choice.data.value}}" {% if choice.data.selected %} selected {% endif %}>{% translate choice.data.label %}</option>
+          {% endfor %}
+        </select>
       {% else %}
-          <label class="mb-2" for="{{ field.id_for_label }}">{{ field.label }}</label>
           {{ field|add_class:'form-control' }}
       {% endif %}
       {% for error in field.errors %}

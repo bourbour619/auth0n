@@ -1,0 +1,59 @@
+{% extends 'dashboard/base.html' %}
+
+{% load i18n %}
+{% load global_tags %}
+
+{% block dashboard_view %}
+    <div class="col flex-grow-1 m-0 p-0">
+        <div class="text-bg-success p-4 rounded-bottom shadow d-flex justify-content-between">
+            <h4>{% translate "Applications" %}</h4>
+            <a href="{% url "dashboard:application_create" %}" class="text-bg-warning rounded text-decoration-none p-2">{% translate "New Application" %}</a>
+        </div>
+        {% if applications|length != 0 %}
+            <div class="table-responsive mx-auto">
+                <table class="table table-bordered table-striped align-middle mt-4">
+                    <thead class="text-bg-light">
+                    <tr>
+                        <th scope="col">{% translate "Id" %}</th>
+                        <th scope="col">{% translate "Name" %}</th>
+                        <th scope="col">{% translate "Authorization grant type" %}</th>
+                        <th scope="col">{% translate "Action" %}</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        {% for application in applications %}
+                            <tr>
+                                <th scope="row">{{ application.id }}</th>
+                                <td>{{ application.name }}</td>
+                                <td>{{ application.authorization_grant_type }}</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url "dashboard:application_edit" application.id %}" class="btn btn-warning">
+                                            {% translate "Edit" %}
+                                            <i class="bi bi-pen-fill"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#applicationDeleteModal">
+                                            {% translate "Delete" %}
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </button>
+                                      </div>
+                                </td>
+                            </tr>
+                            {% render_template "dashboard/applications/delete.html" application_id=application.id %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="d-flex justify-content-center align-items-center vh-100">{% translate "No applications defined" %}</p>
+        {% endif %}
+    </div>
+    
+    <style>
+        tr, td, th {
+            padding: 1.5em !important;
+            text-align: center;
+        }
+    
+    </style>
+{% endblock dashboard_view %}

@@ -5,17 +5,26 @@
 }
 
 body {
-    font-family: 'CircularStd', 'Yekan Bakh', monospace;
     line-height: 1.2rem;
+}
+
+.fa {
+    direction: rtl;
+    font-family: 'Arvo', 'Yekan Bakh', monospace;
+}
+
+.other {
+    direction: ltr;
+    font-family: 'Arvo', 'Yekan Bakh', monospace;
 }
 
 
 @font-face {
     font-family: 'Yekan Bakh';
-    src: url('../fonts/Yekan\ Bakh\ Regular.ttf') format('truetype');
+    src: url('../fonts/YekanBakh-Medium.ttf') format('truetype');
 }
 
 @font-face {
-    font-family: 'CircularStd';
-    src: url('../fonts/CircularStd-Medium.ttf') format('truetype');
+    font-family: 'Arvo';
+    src: url('../fonts/Arvo-Regular.ttf') format('truetype');
 }

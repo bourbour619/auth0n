@@ -1,0 +1,18 @@
+{% extends 'dashboard/base.html' %}
+
+{% load i18n %}
+
+{% block dashboard_view %}
+    <div class="col flex-grow-1 align-self-center m-0 p-0">
+        <h4 class="text-bg-primary p-4 rounded-bottom shadow">{% translate "New Application" %}</h4>
+        <form method="POST" class='row row-cols-1 align-items-center p-4 h-100 mx-auto w-50' novalidate>
+            {% csrf_token %}
+            {{ form }}
+            <div class="col-12 row justify-content-end">
+                <button type="submit" class="col-auto btn btn-success">
+                    {% translate "Save" %} <i class="bi bi-check-lg"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+{% endblock dashboard_view %}

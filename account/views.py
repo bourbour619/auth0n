@@ -3,11 +3,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import HttpResponseRedirect
-from django.urls import reverse, resolve
+from django.urls import reverse_lazy, reverse, resolve
 from django.contrib import messages
 from django.contrib.sessions.models import Session
 from django.utils.translation import gettext as _
 
+from core.views import Auth0nView
 from .models import User
 from .forms import *
 
@@ -17,7 +18,7 @@ from .forms import *
 class RegisterAccountView(FormView):
     form_class = RegisterAccountForm
     template_name = 'account/register.html'
-    success_url = '/account/login/'
+    success_url = reverse_lazy('account:login')
     
 
 
@@ -43,7 +44,7 @@ class RegisterAccountView(FormView):
 class LoginAccountView(FormView):
     form_class = LoginAccountForm
     template_name = 'account/login.html'
-    success_url = '/account/'
+    success_url = reverse_lazy('account:profile')
 
     def get_initial(self):
         form_initial = super().get_initial()
@@ -63,33 +64,20 @@ class LoginAccountView(FormView):
             return super().form_invalid(form)
         messages.info(self.request, _('Welcome dear user.'))
         return super().form_valid(form)
+
+    def get_success_url(self):
+        next = self.request.GET.get('next')
+        return next if next else self.success_url
         
 
-
-class ProfileAccountView(LoginRequiredMixin, View):
-    
-    def setup(self, request, *args, **kwargs):
-        self.user = request.user
-        view = resolve(request.path)
-        self.url = view.url_name
-        return super().setup(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user'] = self.user
-        context['url'] = self.url
-        return context
-
 class ProfileAccountRedirectView(RedirectView):
-
-    def get_redirect_url(self):
-        return reverse('account:edit')
+    url = reverse_lazy('account:edit')
     
-class EditAccountView(ProfileAccountView, FormView):
+    
+class EditAccountView(LoginRequiredMixin, Auth0nView, FormView):
     template_name = 'account/profile/edit.html'
     form_class = EditAccountForm
-
-    success_url = '/account/edit/'
+    success_url = reverse_lazy('account:edit')
 
     def get_initial(self):
         form_initial = super().get_initial()
@@ -117,7 +105,7 @@ class EditAccountView(ProfileAccountView, FormView):
     
         
 
-class GroupsAccountView(ProfileAccountView, ListView):
+class GroupsAccountView(LoginRequiredMixin, Auth0nView, ListView):
     template_name = 'account/profile/groups.html'
     model = Group
     context_object_name = 'groups'
@@ -128,7 +116,7 @@ class GroupsAccountView(ProfileAccountView, ListView):
     
     
 
-class PermissionsAccountView(ProfileAccountView, ListView):
+class PermissionsAccountView(LoginRequiredMixin, Auth0nView, ListView):
     template_name = 'account/profile/permissions.html'
     model = Permission
     context_object_name = 'permissions'
@@ -138,7 +126,7 @@ class PermissionsAccountView(ProfileAccountView, ListView):
         return queryset
 
 
-class SessionsAccountView(ProfileAccountView, ListView):
+class SessionsAccountView(LoginRequiredMixin, Auth0nView, ListView):
     template_name = 'account/profile/sessions.html'
     model = Session
     context_object_name = 'sessions'
@@ -151,5 +139,3 @@ class SessionsAccountView(ProfileAccountView, ListView):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
-
-

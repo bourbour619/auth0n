@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-12 row h-auto w-100 p-0 m-0">
+                <div class="col-auto d-flex gap-4 shadow min-vh-100 bg-light rounded">
+                    <ul class="nav flex-column justify-content-around align-items-center gap-5 h-100 w-100 p-4">
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'overview' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "dashboard:overview" %}">
+                                {% translate "Overview" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'users' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "dashboard:overview" %}">
+                                {% translate "Users" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'userstores' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "dashboard:overview" %}">
+                                {% translate "User Stores" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'claims' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "dashboard:overview" %}">
+                                {% translate "Claims" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'scopes' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "dashboard:overview" %}">
+                                {% translate "Scopes" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'applications' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "dashboard:applications" %}">
+                                {% translate "Applications" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'tokens' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "dashboard:overview" %}">
+                                {% translate "Tokens" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'sessions' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "dashboard:overview" %}">
+                                {% translate "Sessions" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link 
+                                {% if url == 'logs' %} text-bg-primary rounded active {% else %} link-dark {% endif %}"
+                                href="{% url "dashboard:overview" %}">
+                                {% translate "Logs" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link link-danger" href="{% url "account:logout" %}">
+                                {% translate "Log out" %}
+                            </a>
+                        </li>
+                    </ul>
+                    {% comment %} <div class="vr"></div> {% endcomment %}
+                </div>
+                {% block dashboard_view %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block page_js %}
+    <script>
+      $(".nav a").each(function(){
+        $(this).on("mouseenter", function(){
+              v = $.trim($(this).text())
+              if(v == "{% translate "Log out" %}"){                
+                $(this).addClass("text-bg-danger")
+                $(this).removeClass("link-danger")
+              } else {
+                $(this).addClass("text-bg-primary")
+                $(this).removeClass("link-dark")
+              }
+            $(this).addClass("rounded")
+        })
+        $(this).on("mouseleave", function(){
+            v = $.trim($(this).text())
+            if(!$(this).hasClass('active')){
+              if(v == "{% translate "Log out" %}"){
+                $(this).removeClass("text-bg-danger")
+                $(this).addClass("link-danger")
+              } else {
+                $(this).removeClass("text-bg-primary")
+                $(this).addClass("link-dark")
+              }
+                $(this).removeClass("rounded")
+            }
+        })
+      })
+    </script>
+{% endblock %}
