@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-06 02:12+0330\n"
+"POT-Creation-Date: 2023-06-08 17:22+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,7 +135,7 @@ msgstr "نام کاربری یا رمز عبور اشتباه است."
 msgid "Welcome dear user."
 msgstr "کاربر گرامی خوش آمدید."
 
-#: .\account\views.py:99
+#: .\account\views.py:101
 msgid "Account information updated."
 msgstr "اطلاعات حساب بروزرسانی شد."
 
@@ -191,8 +191,6 @@ msgid "Yes"
 msgstr ""
 
 #: .\dashboard\templates\dashboard\applications\edit.html:8
-#, fuzzy
-#| msgid "Edit application"
 msgid "Edit Application"
 msgstr "ویرایش برنامه"
 
@@ -270,16 +268,16 @@ msgid "Logs"
 msgstr "گزارشات"
 
 #: .\dashboard\views\application.py:17
-#, fuzzy, python-format
-#| msgid "Applications"
-msgid "Application %s created."
-msgstr "برنامه‌ها"
+msgid "Application %(name)s created."
+msgstr "برنامه %(name)s ایجاد شد."
 
-#: .\dashboard\views\application.py:37
-#, fuzzy, python-format
-#| msgid "Applications"
-msgid "Application %s Deleted."
-msgstr "برنامه‌ها"
+#: .\dashboard\views\application.py:33
+msgid "Application %(name)s updated."
+msgstr "برنامه %(name)s بروز‌رسانی شد."
+
+#: .\dashboard\views\application.py:43
+msgid "Application %(name)s Deleted."
+msgstr "برنامه %(name)s حذف شد."
 
 #: .\templates\base.html:43
 #: .\venv\Lib\site-packages\django\forms\widgets.py:441

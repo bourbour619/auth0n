@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+<div class="container">
+    <div class="row vh-100 justify-content-center align-items-center">
+        <div class="col-6 row justify-content-center">
+            <div class="col-12 row justify-content-center">
+                <p class="col-auto shadow fs-4 p-4 text-light bg-primary rounded ">
+                    {% translate "Auth0n SSO" %}
+                </p>
+            </div>
+            <div class="col-8 shadow bg-light p-4">
+                {% if not error %}
+                    <form method="POST" class="row row-cols-1 align-items-center g-4">
+                        <p class="h4">{% translate "Authorize" %} {{ application.name }}</p>
+                        {% csrf_token %}
+                        
+                        {% for field in form %}
+                            {% if field.is_hidden %}
+                                {{ field }}
+                            {% endif %}
+                        {% endfor %}
+
+                        <p>{% translate "Application requires the following permissions" %}</p>
+                        <ul class="list-group list-group-flush">
+                            {% for scope in scopes_descriptions %}
+                                <li class="list-group-item">{{ scope }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="col-6 ms-auto btn-group">
+                            <input type="submit" class="btn btn-success"
+                                name="allow" value="{% translate "Authorize" %}">
+                            <input type="submit" class="btn btn-danger"
+                                value="{% translate "Cancel" %}">
+                            </input>
+                        </div>
+                    </form>
+                    {% else %}
+                        <p class="h4">Error: {{ error.error }}</p class="h4">
+                        <p>{{ error.description }}</p>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock content %}

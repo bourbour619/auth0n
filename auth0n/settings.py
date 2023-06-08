@@ -152,8 +152,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.User'
 
 AUTHENTICATION_BACKENDS = (
+    "oauth2_provider.backends.OAuth2Backend",
     "django.contrib.auth.backends.ModelBackend",
-    'oauth2_provider.backends.OAuth2Backend',
 )
 
 LOGIN_URL = '/account/login'

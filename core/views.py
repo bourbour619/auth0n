@@ -1,5 +1,6 @@
 from django.views.generic.base import View
 from django.urls import resolve
+from oauth2_provider.views import AuthorizationView as BaseAuthorizationView
 
 # Create your views here.
 
@@ -18,3 +19,15 @@ class Auth0nView(View):
         if hasattr(self, 'user'):
             context['user'] = self.user
         return context
+
+
+class AuthorizationView(BaseAuthorizationView):
+    template_name = 'core/authorize.html'
+
+    def form_valid(self, form):
+        allow = form.cleaned_data.get("allow")
+        return super().form_valid(form)
+
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)

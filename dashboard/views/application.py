@@ -14,7 +14,7 @@ class ApplicationCreateView(Auth0nView, ApplicationRegistration):
 
     def form_valid(self, form):
         name = form.cleaned_data['name']
-        messages.success(self.request, _('Application %s created.' % name))
+        messages.success(self.request, _('Application %(name)s created.') % {"name": name})
         return super().form_valid(form)
 
 
@@ -26,6 +26,12 @@ class ApplicationListView(Auth0nView, ApplicationList):
 
 class ApplicationUpdateView(Auth0nView, ApplicationUpdate):
     template_name = 'dashboard/applications/edit.html'
+    success_url = reverse_lazy('dashboard:applications')
+
+    def form_valid(self, form):
+        name = form.cleaned_data['name']
+        messages.success(self.request, _('Application %(name)s updated.') % {"name": name})
+        return super().form_valid(form)
 
 
 
@@ -34,5 +40,5 @@ class ApplicationDeleteView(Auth0nView, ApplicationDelete):
 
     def form_valid(self, form):
         application = super().get_object()
-        messages.error(self.request, _('Application %s Deleted.' % application.name))
+        messages.error(self.request, _('Application %(name)s Deleted.' ) % {"name": application.name})
         return super().form_valid(form)

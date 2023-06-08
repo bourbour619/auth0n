@@ -18,14 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from account.views import ProfileAccountRedirectView
-
+from core.views import AuthorizationView
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
-    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('', ProfileAccountRedirectView.as_view(), name='index'),
     path('account/', include('account.urls', namespace='account')),
     path('dashboard/', include('dashboard.urls', namespace='dashbaord')),
+    path('authorize/', AuthorizationView.as_view(), name='authorize'),
     prefix_default_language=False
 )
 
