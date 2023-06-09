@@ -40,5 +40,5 @@ class ApplicationDeleteView(Auth0nView, ApplicationDelete):
 
     def form_valid(self, form):
         application = super().get_object()
-        messages.error(self.request, _('Application %(name)s Deleted.' ) % {"name": application.name})
+        messages.error(self.request, _('Application %(name)s deleted.' ) % {"name": application.name})
         return super().form_valid(form)

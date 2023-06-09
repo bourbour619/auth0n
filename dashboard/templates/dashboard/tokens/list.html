@@ -1,0 +1,63 @@
+{% extends 'dashboard/base.html' %}
+
+{% load i18n %}
+{% load global_tags %}
+
+{% block dashboard_view %}
+    <div class="col flex-grow-1 m-0 p-0">
+        <h4 class="text-bg-success p-4 rounded-bottom shadow">{% translate "Tokens" %}</h4>
+        {% if authorized_tokens|length != 0 %}
+            <div class="table-responsive mx-auto">
+                <table class="table table-bordered table-striped align-middle mt-4">
+                    <thead class="text-bg-light">
+                    <tr>
+                        <th scope="col">{% translate "Id" %}</th>
+                        <th scope="col">{% translate "Token" %}</th>
+                        <th scope="col">{% translate "Application" %}</th>
+                        <th scope="col">{% translate "User" %}</th>
+                        <th scope="col">{% translate "Expires" %}</th>
+                        <th scope="col">{% translate "Scope" %}</th>
+                        <th scope="col">{% translate "Valid" %}</th>
+                        <th scope="col">{% translate "Action" %}</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        {% for authorized_token in authorized_tokens %}
+                            <tr>
+                                <th scope="row">{{ authorized_token.id }}</th>
+                                <td>{{ authorized_token.token }}</td>
+                                <td>{{ authorized_token.application }}</td>
+                                <td>{{ authorized_token.user }}</td>
+                                <td>{{ authorized_token.expires }}</td>
+                                <td>{{ authorized_token.scope }}</td>
+                                <td>{% if authorized_token.is_valid %}
+                                    <i class="bi bi-check-lg"></i>
+                                    {% else %}
+                                    <i class="bi bi-x-lg"></i>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#tokenDeleteModal">
+                                        {% translate "Delete" %}
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% render_template "dashboard/tokens/delete.html" token_id=authorized_token.pk %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="d-flex justify-content-center align-items-center vh-100">{% translate "There are no authorized tokens yet." %}</p>
+        {% endif %}
+    </div>
+    
+    <style>
+        tr, td, th {
+            padding: 1.5em !important;
+            text-align: center;
+        }
+    
+    </style>
+{% endblock dashboard_view %}

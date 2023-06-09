@@ -19,6 +19,7 @@ from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from account.views import ProfileAccountRedirectView
 from core.views import AuthorizationView
+from oauth2_provider.views.base import TokenView, RevokeTokenView
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
@@ -31,4 +32,6 @@ urlpatterns = i18n_patterns(
 
 urlpatterns += [
     path("i18n/", include("django.conf.urls.i18n")),
+    path('token/', TokenView.as_view(), name='token'),
+    path('revoke-token/', RevokeTokenView.as_view(), name='revoke_token')
 ]

@@ -8,3 +8,4 @@ class DashboardRedirectView(RedirectView):
 
 from .application import ApplicationCreateView, ApplicationListView, ApplicationUpdateView, ApplicationDeleteView
 from .overview import OverviewView
+from .token import TokenListView, TokenDeleteView

@@ -11,4 +11,6 @@ urlpatterns = [
     path('applications/', ApplicationListView.as_view(), name='applications'),
     path('applications/edit/<str:pk>/', ApplicationUpdateView.as_view(), name='application_edit'),
     path('applications/delete/<int:pk>/', ApplicationDeleteView.as_view(), name='application_delete'),
+    path('tokens/', TokenListView.as_view(), name='tokens'),
+    path('tokens/delete/<int:pk>/', TokenDeleteView.as_view(), name='token_delete'),
 ]

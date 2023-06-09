@@ -30,7 +30,7 @@
                             {% endfor %}
                         </ul>
 
-                        <div class="col-6 ms-auto btn-group">
+                        <div class="col-auto ms-auto">
                             <input type="submit" class="btn btn-success"
                                 name="allow" value="{% translate "Authorize" %}">
                             <input type="submit" class="btn btn-danger"
@@ -39,7 +39,7 @@
                         </div>
                     </form>
                     {% else %}
-                        <p class="h4">Error: {{ error.error }}</p class="h4">
+                        <p class="h5">{% translate "Error" %}: {{ error.error }}</p class="h4">
                         <p>{{ error.description }}</p>
                     {% endif %}
             </div>
