@@ -18,8 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
 from account.views import ProfileAccountRedirectView
-from core.views import AuthorizationView
-from oauth2_provider.views.base import TokenView, RevokeTokenView
+from core.views import AuthorizationView, TokenView, RevokeTokenView
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),

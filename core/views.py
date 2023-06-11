@@ -1,6 +1,9 @@
 from django.views.generic.base import View
 from django.urls import resolve
-from oauth2_provider.views import AuthorizationView as BaseAuthorizationView
+from django.http import QueryDict
+from oauth2_provider.views import AuthorizationView as BaseAuthorizationView, TokenView as BaseTokenView, RevokeTokenView as BaseRevokeTokenView
+from urllib.parse import urlencode
+import json
 
 # Create your views here.
 
@@ -23,3 +26,27 @@ class Auth0nView(View):
 
 class AuthorizationView(BaseAuthorizationView):
     template_name = 'core/authorize.html'
+
+
+class TokenView(BaseTokenView):
+    
+    def post(self, request, *args, **kwargs):
+        content_type = request.headers.get('Content-Type', None)
+        if content_type == 'application/json':
+            body = json.loads(request.body)
+            items = urlencode(body)
+            request.POST = QueryDict(items)
+            
+        return super().post(request, *args, **kwargs)
+    
+
+class RevokeTokenView(BaseRevokeTokenView):
+
+    def post(self, request, *args, **kwargs):
+        content_type = request.headers.get('Content-Type', None)
+        if content_type == 'application/json':
+            body = json.loads(request.body)
+            items = urlencode(body)
+            request.POST = QueryDict(items)
+            
+        return super().post(request, *args, **kwargs)
